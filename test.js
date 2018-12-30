@@ -29,7 +29,7 @@ test('simple non-linked people', t => {
   t.end()
 })
 
-test('quoting', t => {
+test('quoting when needed', t => {
   const m = mapper() 
   m.add(Person, 'There is a person named [name] who is cool.')
   const data = [
@@ -43,6 +43,24 @@ test('quoting', t => {
   t.deepEqual(out, data)
   t.end()
 })
+
+test('more quotes', t => {
+  const m = mapper() 
+  m.add(Person, 'There is a person named [name] who is cool.')
+  const data = [
+    new Person({name: 'Avery who is cool.'}),
+    new Person({name: 'Avery who is "cool".'}),
+    new Person({name: 'Avery who is "cool" \\o/! .'}),
+  ]
+
+  const str = m.stringify(data)
+  // console.log('str %s', str)
+  
+  const out = m.parse(str)
+  t.deepEqual(out, data)
+  t.end()
+})
+
 
 test('number', t => {
   const m = mapper() 

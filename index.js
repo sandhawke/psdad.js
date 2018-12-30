@@ -117,7 +117,9 @@ class Mapper {
 
         // does it need quoting?
         if (index + 1 === t.parsed.length || // last field, no delim
-            value.indexOf(t.parsed[index + 1]) > -1) { // delim occurs in value
+            value.indexOf(t.parsed[index + 1]) > -1 || // delim occurs in value
+            value.indexOf('"') > -1 ||
+            value.indexOf('\\') > -1) {
           value = JSON.stringify(value) // is that the quoting we want? *shrug*
         }
         yield value

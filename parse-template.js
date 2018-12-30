@@ -50,9 +50,8 @@ function makeRE (parsed, index, varMap) {
       out.push(escape(part))
     } else {
       const groupName = 'var_' + index + '_' + part.count
-      // const term = '"([^"\\\\]|\\"|\\\\)*"|[^"]*?'
       // here's a way we can type it without another doubling of the backslashes
-      const term = /"([^"\\]|\"|\\)*"|[^"]*?/.source
+      const term = /"([^"\\]|\\\"|\\)*"|[^"]*?/.source
       out.push('(?<' + groupName + '>' + term + ')')  // or quoted anything
       varMap[groupName] = part
     }

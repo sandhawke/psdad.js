@@ -46,6 +46,12 @@ test('with embedded quote', t => {
   t.end()
 })
 
+test('with more stuff', t => {
+  const pat = 'Hello [string name]'
+  const dat = 'Hello "Sandro"Hello "Again"'
+  t.deepEqual(groups(pat, dat), { var_0_0: '"Sandro"' })
+  t.end()
+})
 
 test(t => {
   const templates = [
