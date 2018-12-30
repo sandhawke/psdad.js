@@ -1,3 +1,5 @@
+const debug = require('debug')(__filename.split('/').slice(-1).join())
+const intoStream = require('into-stream')
 const syntax = require('./parse-template')
 
 class Mapper {
@@ -38,7 +40,7 @@ class Mapper {
     // return template
   }
 
-  *parse (text) {
+  *parsedItems (text) {
     if (!this.mergedRE) {
       const re = syntax.mergeTemplates(this.templates)
       this.mergedRE = new RegExp(re, 'imgy')  // u prevents \-space ?!
@@ -46,6 +48,10 @@ class Mapper {
     for (const [t, b] of syntax.parse(this, text)) {
       yield t.local.input(b)
     }
+  }
+
+  parse (text) {
+    return [...this.parsedItems(text)]
   }
 
   parser () { // would return a transformStream from strings to objects
@@ -57,18 +63,23 @@ class Mapper {
     // prepend to the next chunk.  re.lastIndex makes that fairly easy.
   }
 
+  streamify (items) {
+    return intoStream(this.stringChunks(items))
+  }
+
   stringify (items) {
-    const out = []
+    return [...this.stringChunks(items)].join('')
+  }
+
+  *stringChunks (items) {
     for (const item of items) {
       //console.log('stringify %O', item)
       const t = this.findTemplate(item)
       //console.log('.. using template %O', t)
       if (!t) throw Error('cant stringify object')
-      const text = this.fill(t, item)
-      //console.log('.. made text %O', text)
-      out.push(text)
+      yield* this.fill(t, item)
+      yield('\n\n')
     }
-    return out.join('\n\n')
   }
 
   findTemplate (item) {
@@ -79,20 +90,39 @@ class Mapper {
     return undefined
   }
 
-  fill (t, item) {
-    const out = []
-    for (const part of t.parsed) {
+  /*
+    Given a template and an object of data, yield parts of string with the
+    template filled in, using the fields of that object.
+  */
+  *fill (t, item) {
+    for (const [index, part] of t.parsed.entries()) {
       //console.log('part:', part)
       if (typeof part === 'string') {
-        out.push(part)
+        yield part
       } else {
         let value = item[part.name]
         // if (value === undefined)    warn?  error?
         if (value === undefined) value = '(ValueUnknown)'
-        out.push(value)
+
+        switch (typeof value) {
+        case 'string':
+          break
+        case 'number':
+        case 'boolean':
+          value = '' + value
+          break
+        default:
+          throw new Error('cant serialize: ' + JSON.stringify(value))
+        }
+
+        // does it need quoting?
+        if (index + 1 === t.parsed.length || // last field, no delim
+            value.indexOf(t.parsed[index + 1]) > -1) { // delim occurs in value
+          value = JSON.stringify(value) // is that the quoting we want? *shrug*
+        }
+        yield value
       }
     }
-    return out.join('')
   }
 }
 

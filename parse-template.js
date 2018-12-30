@@ -1,4 +1,5 @@
-const XRegExp = require('xregexp')
+const {escape} = require('xregexp')
+const nativize = require('./nativize')
 
 function *parseTemplate (t) {
   // const re = /(?<literal>([^[]|"\["|'\[')*)|\[[^]]\]/imguy
@@ -35,7 +36,7 @@ function parseSlot (decl) {
   const re = /^\s*((?<type>\w+)\s+)?(?<name>\w+)\s*(;.*)?$/
   const m = decl.match(re)
   if (m) {
-    return { type: m.groups.type, name: m.groups.name }
+    return { type: m.groups.type || 'string', name: m.groups.name }
   } else {
     console.error('text=%o', decl)
     throw new Error('bad variable declaration')
@@ -46,12 +47,14 @@ function makeRE (parsed, index, varMap) {
   const out = []
   for (const part of parsed) {
     if (typeof (part) === 'string') {
-      out.push(XRegExp.escape(part))
+      out.push(escape(part))
     } else {
       const groupName = 'var_' + index + '_' + part.count
-      // out.push('(?<' + groupName + '>.+?)')   // needs to be more restrictive or else repeated sentences gobble across boundaries
-      out.push('(?<' + groupName + '>[^.,!]+?)')  // or quoted anything
-      varMap[groupName] = part.name
+      // const term = '"([^"\\\\]|\\"|\\\\)*"|[^"]*?'
+      // here's a way we can type it without another doubling of the backslashes
+      const term = /"([^"\\]|\"|\\)*"|[^"]*?/.source
+      out.push('(?<' + groupName + '>' + term + ')')  // or quoted anything
+      varMap[groupName] = part
     }
   }
   return out.join('')
@@ -105,8 +108,16 @@ function *parse (merged, text) {
         tnum = parseInt(key.slice(2))
         line = value
       }
-      const varName = merged.varMap[key]
-      if (varName) b[varName] = value
+      const slot = merged.varMap[key]
+      if (slot) {
+        let v = value
+        if (v.startsWith('"')) {
+          // should only be possible if it's a fully quoted string
+          v = JSON.parse(v)
+        }
+        const native = nativize(slot.type, v)
+        b[slot.name] = native
+      }
     }
     // //console.log('matched template %d text %o', tnum, line)
     const t = merged.templates[tnum]

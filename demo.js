@@ -27,10 +27,9 @@ console.log('\n## mydata=\n%O', mydata)
 
 const str = m.stringify(mydata)
 
-console.log('\n## stringify(mydata)=\n%s', str)
+console.log('\n## stringify(mydata)=\n%s', str.slice(0,-1))  // console adds \n
 
 const mydata2 = m.parse(str)
 
-console.log('\n## parse(stringified(mydata))=\n%O', [...mydata2])
+console.log('## parse(stringified(mydata))=\n%O', [...mydata2])
 
-console.log('\n(Sorry, conversion back to number is not yet implemented')

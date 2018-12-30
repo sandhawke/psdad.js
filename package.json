@@ -25,6 +25,7 @@
   "dependencies": {
     "@sindresorhus/is": "^0.14.0",
     "debug": "^4.1.0",
+    "into-stream": "^4.0.0",
     "xregexp": "^4.2.0"
   }
 }
