@@ -9,8 +9,8 @@
 */
 
 module.exports = (type, v) => {
-  if (type === 'string')  return v
-  
+  if (type === 'string') return v
+
   if (type === 'number' || type === 'integer') {
     v = JSON.parse(v)
     if (typeof v !== 'number') throw new TypeError('expected number')
@@ -18,7 +18,7 @@ module.exports = (type, v) => {
     if (type === 'integer') {
       if (v !== Math.round(v)) throw new TypeError('expected integer')
     }
-    
+
     return v
   }
 
@@ -27,6 +27,6 @@ module.exports = (type, v) => {
     if (v.match(/false/i)) return false
     throw new TypeError('expected boolean')
   }
-  
+
   throw new TypeError('unimplemented type: ' + JSON.stringify(type))
 }

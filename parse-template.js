@@ -1,7 +1,7 @@
-const {escape} = require('xregexp')
+const { escape } = require('xregexp')
 const nativize = require('./nativize')
 
-function *parseTemplate (t) {
+function * parseTemplate (t) {
   // const re = /(?<literal>([^[]|"\["|'\[')*)|\[[^]]\]/imguy
   const re = /(?<literal>[^[]+)|\[(?<slot>.*?)\]/imguy
   let m
@@ -51,8 +51,8 @@ function makeRE (parsed, index, varMap) {
     } else {
       const groupName = 'var_' + index + '_' + part.count
       // here's a way we can type it without another doubling of the backslashes
-      const term = /"([^"\\]|\\\"|\\)*"|[^"]*?/.source
-      out.push('(?<' + groupName + '>' + term + ')')  // or quoted anything
+      const term = /"([^"\\]|\\\"|\\)*"|[^"]*?/.source //eslint-disable-line
+      out.push('(?<' + groupName + '>' + term + ')') // or quoted anything
       varMap[groupName] = part
     }
   }
@@ -81,31 +81,30 @@ new RegExp(x, 'imgy')
 
 */
 
-function *parse (merged, text) {
+function * parse (merged, text) {
   // {templates, varMap, mergedRE}
 
   // //console.log('re=%o', re)
   while (true) {
-    //console.log('')
+    // console.log('')
     const m = merged.mergedRE.exec(text)
     if (!m) break
     // //console.log('m=%o', m)
     if (m.groups.junk) {
-      //console.log('Junk %o', m.groups.junk)
+      // console.log('Junk %o', m.groups.junk)
       continue
     }
     if (m.groups.ws) {
-      //console.log('Whitespace %o', m.groups.ws)
+      // console.log('Whitespace %o', m.groups.ws)
       continue
     }
     const b = {}
     let tnum
-    let line
     for (const [key, value] of Object.entries(m.groups)) {
       if (!value) continue // to unused ones are set to undefined
       if (key.startsWith('t_')) {
         tnum = parseInt(key.slice(2))
-        line = value
+        // console.log('match line %o', line)
       }
       const slot = merged.varMap[key]
       if (slot) {
@@ -120,10 +119,10 @@ function *parse (merged, text) {
     }
     // //console.log('matched template %d text %o', tnum, line)
     const t = merged.templates[tnum]
-    //console.log('Got %s %o', t.code, b)
+    // console.log('Got %s %o', t.code, b)
     yield [t, b]
   }
-  //console.log('DONE, at pos', merged.mergedRE.lastIndex, text.length)
+  // console.log('DONE, at pos', merged.mergedRE.lastIndex, text.length)
 }
 
 module.exports = { parseTemplate, makeRE, mergeTemplates, parse }

@@ -1,4 +1,4 @@
-const debug = require('debug')(__filename.split('/').slice(-1).join())
+// const debug = require('debug')(__filename.split('/').slice(-1).join())
 const intoStream = require('into-stream')
 const syntax = require('./parse-template')
 
@@ -14,11 +14,11 @@ class Mapper {
         local.prototype &&
         local.prototype.constructor &&
         local.prototype.constructor.name === local.name) {
-      const cls = local
+      const AppClass = local
       local = {
-        class: cls,
-        input: x => new cls(x),
-        output: x => x instanceof cls
+        class: AppClass,
+        input: x => new AppClass(x),
+        output: x => x instanceof AppClass
       }
     }
     // look for the text attached to the class as a property or static method
@@ -30,20 +30,20 @@ class Mapper {
         text = def
       }
     }
-    
+
     const parsed = [...syntax.parseTemplate(text)]
     const index = this.templates.length // gets coded into regexp
     const re = syntax.makeRE(parsed, index, this.varMap)
     const template = { local, text, parsed, re, index }
     this.templates.push(template)
-    delete this.mergedRE 
+    delete this.mergedRE
     // return template
   }
 
-  *parsedItems (text) {
+  * parsedItems (text) {
     if (!this.mergedRE) {
       const re = syntax.mergeTemplates(this.templates)
-      this.mergedRE = new RegExp(re, 'imgy')  // u prevents \-space ?!
+      this.mergedRE = new RegExp(re, 'imgy') // u prevents \-space ?!
     }
     for (const [t, b] of syntax.parse(this, text)) {
       yield t.local.input(b)
@@ -71,19 +71,19 @@ class Mapper {
     return [...this.stringChunks(items)].join('')
   }
 
-  *stringChunks (items) {
+  * stringChunks (items) {
     for (const item of items) {
-      //console.log('stringify %O', item)
+      // console.log('stringify %O', item)
       const t = this.findTemplate(item)
-      //console.log('.. using template %O', t)
+      // console.log('.. using template %O', t)
       if (!t) throw Error('cant stringify object')
-      yield* this.fill(t, item)
-      yield('\n\n')
+      yield * this.fill(t, item)
+      yield ('\n\n')
     }
   }
 
   findTemplate (item) {
-    //console.log('ft', item)
+    // console.log('ft', item)
     for (const t of this.templates) {
       if (t.local.output(item)) return t
     }
@@ -94,9 +94,9 @@ class Mapper {
     Given a template and an object of data, yield parts of string with the
     template filled in, using the fields of that object.
   */
-  *fill (t, item) {
+  * fill (t, item) {
     for (const [index, part] of t.parsed.entries()) {
-      //console.log('part:', part)
+      // console.log('part:', part)
       if (typeof part === 'string') {
         yield part
       } else {
@@ -105,14 +105,14 @@ class Mapper {
         if (value === undefined) value = '(ValueUnknown)'
 
         switch (typeof value) {
-        case 'string':
-          break
-        case 'number':
-        case 'boolean':
-          value = '' + value
-          break
-        default:
-          throw new Error('cant serialize: ' + JSON.stringify(value))
+          case 'string':
+            break
+          case 'number':
+          case 'boolean':
+            value = '' + value
+            break
+          default:
+            throw new Error('cant serialize: ' + JSON.stringify(value))
         }
 
         // does it need quoting?

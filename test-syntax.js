@@ -34,14 +34,14 @@ test('quoted', t => {
 
 test('with embedded bs', t => {
   const pat = 'Hello [string name]'
-  const dat = 'Hello "a\\\\b"'   // really that's just \\, but we double for JS
+  const dat = 'Hello "a\\\\b"' // really that's just \\, but we double for JS
   t.deepEqual(groups(pat, dat), { var_0_0: '"a\\\\b"' })
   t.end()
 })
 
 test('with embedded quote', t => {
   const pat = 'Hello [string name]'
-  const dat = 'Hello "a\\"b"'   // really that's just \, but we double for JS
+  const dat = 'Hello "a\\"b"' // really that's just \, but we double for JS
   t.deepEqual(groups(pat, dat), { var_0_0: '"a\\"b"' })
   t.end()
 })
@@ -56,7 +56,7 @@ test('with more stuff', t => {
 test(t => {
   const templates = [
     { text: 'Hello [string name]!', code: 'hello' },
-    { text: 'Goodbye [name].' , code: 'bye' },
+    { text: 'Goodbye [name].', code: 'bye' },
     { text: 'I think you are [age] years old.', code: 'age1' },
     { text: 'I\'m sure [name] is [age] years old.', code: 'age2' }
   ]
@@ -70,14 +70,14 @@ test(t => {
   }
   const mergedRE = new RegExp(syntax.mergeTemplates(templates, varMap), 'imgy')
 
-  const out = [...syntax.parse({mergedRE, varMap, templates}, 'Hello s! Hello Fred! Goodbye Silly. I think you are foo3 yours old. I think you are 23 years old.')]
-  const o2 = out.map(([t,b]) => { return [ t.code, b ] })
-  
+  const out = [...syntax.parse({ mergedRE, varMap, templates }, 'Hello s! Hello Fred! Goodbye Silly. I think you are foo3 yours old. I think you are 23 years old.')]
+  const o2 = out.map(([t, b]) => { return [ t.code, b ] })
+
   t.deepEqual(o2, [
     [ 'hello', { name: 's' } ],
     [ 'hello', { name: 'Fred' } ],
     [ 'bye', { name: 'Silly' } ],
     [ 'age1', { age: 'foo3 yours old. I think you are 23' } ] ])
 
-   t.end()
-})           
+  t.end()
+})
