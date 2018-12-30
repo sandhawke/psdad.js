@@ -1,0 +1,28 @@
+{
+  "name": "psdad",
+  "version": "0.0.0",
+  "description": "implementation of psdad data interop proposal",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx standard && npx tap --cov test*.js test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandhawke/psdad.js.git"
+  },
+  "keywords": [
+    "sandhawke"
+  ],
+  "author": "Sandro Hawke (http://hawke.org/sandro)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sandhawke/psdad.js/issues"
+  },
+  "homepage": "https://github.com/sandhawke/psdad.js#readme",
+  "devDependencies": {
+    "tape": "^4.9.1"
+  },
+  "dependencies": {
+    "debug": "^4.1.0"
+  }
+}

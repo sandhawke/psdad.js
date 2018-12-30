@@ -3,5 +3,5 @@
 
 implementation of psdad data interop proposal
 
-[npm-image]: https://img.shields.io/npm/v/psdad.js.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/psdad.js
+[npm-image]: https://img.shields.io/npm/v/psdad.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/psdad
