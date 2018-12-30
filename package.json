@@ -23,6 +23,8 @@
     "tape": "^4.9.1"
   },
   "dependencies": {
-    "debug": "^4.1.0"
+    "@sindresorhus/is": "^0.14.0",
+    "debug": "^4.1.0",
+    "xregexp": "^4.2.0"
   }
 }
