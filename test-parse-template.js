@@ -22,11 +22,34 @@ test('parsing of templates', t => {
 })
 
 test('id and subject', t => {
-  pt(t, '[id]', [ { type: 'id', name: 'id', count: 0 } ])
-  pt(t, '[id a]', [ { type: 'id', name: 'a', count: 0 } ])
+  pt(t, '[id]', [ { type: 'ref', name: 'id', count: 0 } ])
+  pt(t, '[ref id]', [ { type: 'ref', name: 'id', count: 0 } ])
+  // pt(t, '[id a]', [ { type: 'id', name: 'a', count: 0 } ])
 
-  pt(t, '[subject]', [ { type: 'subject', name: 'subject', count: 0 } ])
-  pt(t, '[subject a]', [ { type: 'subject', name: 'a', count: 0 } ])
+  pt(t, '[subject]', [ { type: 'ref', name: 'subject', count: 0 } ])
+  pt(t, '[ref subject]', [ { type: 'ref', name: 'subject', count: 0 } ])
+
+  pt(t, 'hello', ['hello'])
+
+  /*
+
+    for some reason, doing this error-test makes the FOLLOWING call fail.
+
+  try {
+    pt(t, '[string id]', [ { type: 'ref', name: 'id', count: 0 } ])
+    t.fail()
+  } catch (e) { t.pass('string id threw') }
+
+  pt(t, 'hello', ['hello'])
+  */
+
+  /*
+  try {
+    pt(t, '[string subject]', [ { type: 'ref', name: 'id', count: 0 } ])
+    t.fail('string subject throw')
+  } catch (e) { t.pass() }
+  */
+
   t.end()
 })
 

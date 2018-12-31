@@ -131,7 +131,7 @@ class Mapper {
         yield part
       } else {
         let value
-        if (part.type === 'id') {
+        if (part.name === 'id' || part.name === 'subject') {
           value = reftable.idForObject(item)
         } else {
           value = item[part.name]

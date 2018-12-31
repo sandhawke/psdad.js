@@ -61,12 +61,15 @@ function * parse (mapper, text, reftable) {
           v = JSON.parse(v)
         }
         if (slot.type === 'ref') {
-          reftable.setValueToId(b, slot.name, v)
-          debug('after reftable.setValueToId %O', b)
-        } else if (slot.type === 'id') {
-          id = value
-        } else if (slot.type === 'subject') {
-          subject = value
+          v = v.trim().toLowerCase()
+          if (slot.name === 'id') {
+            id = v
+          } else if (slot.name === 'subject') {
+            subject = v
+          } else {
+            reftable.setValueToId(b, slot.name, v)
+            debug('after reftable.setValueToId %O', b)
+          }
         } else {
           const native = nativize(slot.type, v)
           b[slot.name] = native

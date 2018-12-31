@@ -83,7 +83,7 @@ class ReferenceTable {
   complete () {
     debug('fdw = %O', this.forwardRefs)
     for (const [id, refs] of this.forwardRefs.entries() || []) {
-      if (id === '(ValueUnknown)') continue
+      if (id === '(valueunknown)') continue
       debug('.. %O', { id, refs })
       console.error('Warning: unresolved forward refs to %O: %O', id, refs)
     }

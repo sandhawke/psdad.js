@@ -37,14 +37,22 @@ function parseSlot (decl) {
   let name = m.groups.name
   let optional = !!m.groups.optional
 
-  if (type === undefined && name === 'id') type = 'id'
-  if (type === undefined && name === 'subject') type = 'subject'
+  if (name === 'id' || name === 'subject') {
+    if (type === undefined) {
+      type = 'ref'
+    } else if (type !== 'ref') {
+      // console.error(m.groups)
+      throw new Error('field names "id" and "subject" must be type "ref"')
+    }
+    // console.log('****OK', m.groups, {type, name})
+  }
   if (type === undefined) type = 'string'
 
   // nicer to leave it out than set it to false, I think?
   const out = { type, name }
   if (optional) out.optional = true
 
+  // console.log('****MORE', {type, name})
   return out
 }
 
