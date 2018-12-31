@@ -96,7 +96,8 @@ function * parse (mapper, text, reftable) {
       continue
     }
 
-    debug('matched template %d text %o', tnum, line)
+    debug('matched template %d text %O, vars %O', tnum, line, b)
+    debug('mapper %O', mapper)
     const t = mapper.templates[tnum]
     const newObj = t.local.input(b)
     b._forwardTo = newObj // so forward references can resolve

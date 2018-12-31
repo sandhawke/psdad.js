@@ -13,3 +13,613 @@ and this input text: Hello, Sandro.
 the resulting object as canonical JSON with 2-space indenting should be:
 "{\n  \"name\": \"Sandro\"\n}"
 
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: (ValueUnknown).
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: (ValueUnknown).
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}x.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: xSandro}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: '10'}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: "{\n  \"name\": \"Sandro\"\n}".
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+the resulting object as canonical JSON with 2-space indenting should be:
+{name: Sandro}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+the resulting object as canonical JSON with 2-space indenting should be:
+{name: 10}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: 10}.
+
+Given this template: xyz [foo]
+and this input text: xyz p.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: 10}.
+
+Given this template: xyz [foo]
+and this input text: xyz p.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: 10}.
+
+Given this template: xyz [foo]
+and this input text: xyz p.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [integer num]. 
+and this input text: Hello, 10.
+jsonic result match: {num: 10}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer name]. 
+and this input text: Hello, 10.
+jsonic result match: {name: 10}.
+
+Given this template: xyz [foo]
+and this input text: xyz p.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [integer num]. 
+and this input text: Hello, 10.
+jsonic result match: {num: 10}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code]. 
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: xyz [foo]
+and this input text: xyz p.
+jsonic result match: {name: 10}.
+
+Gxiven this template: Hello, [integer num]. 
+and this input text: Hello, 10.
+jsonic result match: {num: 10}.
+
+Given this template: xyz [foo]
+and this input text: xyz p.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [integer num]. 
+and this input text: Hello, 10.
+jsonic result match: {num: 10}.
+
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code]. 
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: xyz [foo]
+and this input text: xyz p.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [integer num].
+and this input text: Hello, 10.
+jsonic result match: {num: 10}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: xyz
+and this input text: xyz p.
+jsonic result match: {name: 10}.
+
+Given this template: Hello, [integer num].
+and this input text: Hello, 10.
+jsonic result match: {num: 10}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: xyz
+and this input text: xyz p.
+jsonic result match: {}.
+
+Given this template: Hello, [integer num].
+and this input text: Hello, 10.
+jsonic result match: {num: 10}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [integer num].
+and this input text: Hello, 10.
+jsonic result match: {num: 10}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2]
+and this input text: Hello, Sandro Hawke and friends
+jsonic result match: {num: 10}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2]
+and this input text: Hello, Sandro Hawke and friends
+jsonic result match: {name 'Sandro Hawke'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2]
+and this input text: Hello, Sandro Hawke and friends
+jsonic result match: {name: 'Sandro Hawke'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2]
+and this input text: Hello, Sandro Hawke and friends
+jsonic result match: {name1: 'Sandro Hawke'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2]
+and this input text: Hello, Sandro Hawke and friends
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2]
+and this input text: Hello, Sandro Hawke and friends
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2]
+and this input text: Hello, Sandro Hawke and friends
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2]
+and this input text: Hello, Sandro Hawke and friends
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2]
+and this input text: Hello, Sandro Hawke and friends
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2]
+and this input text: Hello, Sandro Hawke and friends
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2]
+and this input text: Hello, Sandro Hawke and friends
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2]
+and this input text: Hello, Sandro Hawke and friends
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2].
+and this input text: Hello, Sandro Hawke and friends.
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2] some ending
+and this input text: Hello, Sandro Hawke and friends some endins
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2] some ending
+and this input text: Hello, Sandro Hawke and friends some ending
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
+
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
+and this input text: Hello, Sandro.
+jsonic result match: {name: Sandro}.
+
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
+
+Given this template: Hello, [name1] and [name2] some ending
+and this input text: Hello, Sandro Hawke and friends some ending
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
+
+Given this template: this object has an [id].
+and this input text: this object has an foo-bar-baz.
+jsonic result match: {}.
+

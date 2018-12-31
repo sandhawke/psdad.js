@@ -37,7 +37,7 @@ function manualMatch (mapper, text) {
     const match = longest[2]
     const index = longest[3]
     match.groups['t_' + index] = true // this is how RE.exec ids the template
-    debug('returning match %O', match)
+    debug('returning match bindings %O', match.groups)
     return match
   }
   return null
@@ -52,7 +52,7 @@ function matchOne(template, text, templateIndex) {
     function slotFilled (text) {
       debug('..slot %d filled with text %o', index, text)
       // this matches what makeRE names the group for this slot
-      groups['var_' + templateIndex + '_' + index] = text
+      groups['var_' + templateIndex + '_' + part.count] = text
       pos += text.length
     }
     if (typeof part === 'string') {
@@ -88,13 +88,20 @@ function matchOne(template, text, templateIndex) {
           debug('..this a trailing slot, consumes all remaining input')
           slotFilled(text.slice(pos))
         } else if (typeof next === 'string') {
-          const end = text.indexOf(next, pos)
+          const end = text.indexOf(next, pos -1 ) // ???
           if (end === -1) {
             debug('..but terminating literal (%o) not found', next)
+            const t = text.slice(pos)
+            debug('  in %o', t)
+            debug(' indexOf = ', t.indexOf(next))
+            debug(' startsWith = ', t.startsWith(next))
+            debug(' %o', next)
+            debug(' %o', t)
+            debug(' eq', next === t.slice(0,next.length))
             return null
           }
           const result = text.slice(pos, end)
-          debug('..matched content %o', result)
+          debug('..matched content %o using terminator %o', result, next)
           slotFilled(result)
         } else {
           throw new Error('no delimiter between slots')

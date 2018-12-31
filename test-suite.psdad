@@ -1,19 +1,16 @@
-Given this template: Hello, [string name]. 
+Given this template: xyz
+and this input text: xyz.
+jsonic result match: {}.
+
+Given this template: Hello, [string name].
 and this input text: Hello, Sandro.
-the resulting object as canonical JSON with 2-space indenting should be:
-"{\n  \"name\": \"Sandro\"\n}"
+jsonic result match: {name: Sandro}.
 
-Given this template: Hello, [string name]. 
-and this input text: Hello, Sandro.
-the resulting object as canonical JSON with 2-space indenting should be:
-"{\n  \"name\": \"Sandro\"\n}"
+Given this template: Hello, [integer code].
+and this input text: Hello, 10.
+jsonic result match: {code: 10}.
 
-Given this template: Hello
-and this input text: Hello
-the resulting object as canonical JSON with 2-space indenting should be:
-x
-
-Given this template: 
-and this input text: 
-the resulting object as canonical JSON with 2-space indenting should be:
+Given this template: Hello, [name1] and [name2] some ending
+and this input text: Hello, Sandro Hawke and friends some ending
+jsonic result match: {name1: 'Sandro Hawke', name2: 'friends'}.
 
