@@ -74,3 +74,23 @@ test('number', t => {
   t.deepEqual(shapes2, shapes)
   t.end()
 })
+
+test('subject', t => {
+  const m = mapper()
+  m.add(Person, 'There is a person named [name], hereinafter refered to as [id].')
+  m.add('Person [subject] is [number age] years old.')
+
+  const data = [
+    new Person({ name: 'Avery', age: 91 })
+  ]
+
+  /*
+  const str = m.stringify(data)
+  t.equal(str, 'There is a person named Avery, hereinafter refered to as a0.\n\n')
+
+  const out = m.parse(str + 'a0 is 91 years old.')
+  */
+  const out = m.parse('There is a person named Avery, hereinafter refered to as a0. Person a0 is 91 years old.')
+  t.deepEqual(out, data)
+  t.end()
+})

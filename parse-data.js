@@ -46,6 +46,7 @@ function * parse (mapper, text, reftable) {
     const b = {}
     let tnum
     let id
+    let subject
     for (const [key, value] of Object.entries(m.groups)) {
       if (!value) continue // to unused ones are set to undefined
       if (key.startsWith('t_')) {
@@ -64,12 +65,23 @@ function * parse (mapper, text, reftable) {
           debug('after reftable.setValueToId %O', b)
         } else if (slot.type === 'id') {
           id = value
+        } else if (slot.type === 'subject') {
+          subject = value
         } else {
           const native = nativize(slot.type, v)
           b[slot.name] = native
         }
       }
     }
+
+    if (subject) {
+      const ref = reftable.getObject(subject)
+      if (!ref) throw Error('subject reference not found: ' + JSON.stringify(subject))
+      debug('[subject] match, overlaying %O on %O', b, ref)
+      Object.assign(ref, b)
+      continue
+    }
+
     // debug('matched template %d text %o', tnum, line)
     const t = mapper.templates[tnum]
     const newObj = t.local.input(b)

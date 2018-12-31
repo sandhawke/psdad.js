@@ -25,13 +25,18 @@ class Mapper {
       }
     }
     // look for the text attached to the class as a property or static method
-    const def = local.class.definition
+    const def = local && local.class && local.class.definition
     if (text === undefined && def) {
       if (typeof def === 'function') {
         text = def(local.class)
       } else {
         text = def
       }
+    }
+    // OR just text, if it's a [subject] template
+    if (text === undefined) {
+      text = local
+      local = undefined // this will be okay as long [subject] is found
     }
 
     const parsed = [...parseTemplate.parseTemplate(text)]

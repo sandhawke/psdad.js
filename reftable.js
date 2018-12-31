@@ -28,6 +28,10 @@ class ReferenceTable {
     return id
   }
 
+  getObject (id) {
+    return this.objFor.get(id)
+  }
+
   /*
     sort of: item[key] = objectForId(id)
 
