@@ -1,14 +1,16 @@
-// const debug = require('debug')(__filename.split('/').slice(-1).join())
+const debug = require('debug')(__filename.split('/').slice(-1).join())
 const intoStream = require('into-stream')
 const parseTemplate = require('./parse-template')
 const parseData = require('./parse-data')
 const { ReferenceTable } = require('./reftable')
+const { Matcher } = require('./manual-match')
 
 class Mapper {
   constructor (options = {}) {
     this.templates = []
     this.varMap = {}
     this.genid = options.genid
+    Object.assign(this, options)
   }
 
   add (local, text) {
@@ -54,8 +56,13 @@ class Mapper {
 
   * parsedItems (text, reftable) {
     if (!this.mergedRE) {
-      const re = parseData.mergeTemplates(this.templates)
-      this.mergedRE = new RegExp(re, 'imgy') // u prevents \-space ?!
+      if (this.trace) {
+        debug('tracing')
+        this.mergedRE = new Matcher(this)
+      } else {
+        const re = parseData.mergeTemplates(this.templates)
+        this.mergedRE = new RegExp(re, 'imgy') // u prevents \-space ?!
+      }
     }
     yield * parseData.parse(this, text, reftable)
   }

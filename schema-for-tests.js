@@ -6,3 +6,5 @@ the resulting object as canonical JSON with 2-space indenting should be:
 [string json]`
 
 module.exports = { TestCase }
+
+// OR do JSON deep-equal.

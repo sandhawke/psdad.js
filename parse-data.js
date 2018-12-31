@@ -2,6 +2,17 @@ const debug = require('debug')(__filename.split('/').slice(-1).join())
 const nativize = require('./nativize')
 const { escape } = require('xregexp')
 
+/*
+  This is the regex matching the section of in the intpu which aligns
+  with a slot in the template.  It's a quoted string or the minimal
+  matching text which doesn't contain quotes - that ends up using the
+  next literal in the template as the ending delimiter.
+
+  slotRE is really a string containing a regex, but we write it as
+  /foo/.source to avoid another doubling of the backslashes.
+*/
+const slotRE = /"([^"\\]|\\\"|\\)*"|[^"]*?/.source //eslint-disable-line
+
 function makeRE (parsed, index, varMap) {
   const out = []
   for (const part of parsed) {
@@ -9,9 +20,7 @@ function makeRE (parsed, index, varMap) {
       out.push(escape(part))
     } else {
       const groupName = 'var_' + index + '_' + part.count
-      // here's a way we can type it without another doubling of the backslashes
-      const term = /"([^"\\]|\\\"|\\)*"|[^"]*?/.source //eslint-disable-line
-      out.push('(?<' + groupName + '>' + term + ')') // or quoted anything
+      out.push('(?<' + groupName + '>' + slotRE + ')') // or quoted anything
       varMap[groupName] = part
     }
   }
@@ -32,9 +41,11 @@ function * parse (mapper, text, reftable) {
   // //console.log('re=%o', re)
   while (true) {
     // console.log('')
+    debug('parse() next chunk')
     const m = mapper.mergedRE.exec(text)
     if (!m) break
-    // //console.log('m=%o', m)
+    const line = m[0]
+    debug('match=%o', m)
     if (m.groups.junk) {
       // console.log('Junk %o', m.groups.junk)
       continue
@@ -85,7 +96,7 @@ function * parse (mapper, text, reftable) {
       continue
     }
 
-    // debug('matched template %d text %o', tnum, line)
+    debug('matched template %d text %o', tnum, line)
     const t = mapper.templates[tnum]
     const newObj = t.local.input(b)
     b._forwardTo = newObj // so forward references can resolve

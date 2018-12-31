@@ -8,12 +8,8 @@ and this input text: Hello, Sandro.
 the resulting object as canonical JSON with 2-space indenting should be:
 "{\n  \"name\": \"Sandro\"\n}"
 
-Given this template: Hello
-and this input text: Hello
+Given this template: Hello, [string name]. 
+and this input text: Hello, Sandro.
 the resulting object as canonical JSON with 2-space indenting should be:
-x
-
-Given this template: 
-and this input text: 
-the resulting object as canonical JSON with 2-space indenting should be:
+"{\n  \"name\": \"Sandro\"\n}"
 
