@@ -1,4 +1,4 @@
-const debug = require('debug')(__filename.split('/').slice(-1).join())
+// const debug = require('debug')(__filename.split('/').slice(-1).join())
 const intoStream = require('into-stream')
 const parseTemplate = require('./parse-template')
 const parseData = require('./parse-data')
@@ -46,7 +46,7 @@ class Mapper {
   //
   // Parsing
   //
-  
+
   * parsedItems (text, reftable) {
     if (!this.mergedRE) {
       const re = parseData.mergeTemplates(this.templates)
@@ -56,7 +56,7 @@ class Mapper {
   }
 
   parse (text) {
-    const reftable = new ReferenceTable({genid: this.genid})
+    const reftable = new ReferenceTable({ genid: this.genid })
     const result = [...this.parsedItems(text, reftable)]
     reftable.complete()
     return result
@@ -74,7 +74,7 @@ class Mapper {
   //
   // Serializing
   //
-  
+
   streamify (items) {
     return intoStream(this.stringChunks(items))
   }
@@ -84,9 +84,9 @@ class Mapper {
   }
 
   * stringChunks (items) {
-    const reftable = new ReferenceTable({genid: this.genid})
+    const reftable = new ReferenceTable({ genid: this.genid })
     for (const item of items) {
-      yield* this.stringChunk1 (item, reftable)
+      yield * this.stringChunk1(item, reftable)
     }
   }
 
@@ -99,7 +99,7 @@ class Mapper {
     yield * this.fill(t, item, needs, reftable)
     yield ('\n\n')
     for (const prereq of needs) {
-      yield * this.stringChunk1 (prereq, reftable)
+      yield * this.stringChunk1(prereq, reftable)
     }
   }
 
@@ -135,20 +135,20 @@ class Mapper {
         if (value === undefined) value = '(ValueUnknown)'
 
         switch (typeof value) {
-        case 'string':
-          break
-        case 'number':
-        case 'boolean':
-          value = '' + value
-          break
-        case 'object':
-          if (part.type !== 'ref') {
-            console.error('object value found in slot without "ref" type, slot=%O, value=%O', part, value)
-          }
-          value = reftable.idForObject(value, needs)
-          break
-        default:
-          throw new Error('cant serialize: ' + JSON.stringify(value))
+          case 'string':
+            break
+          case 'number':
+          case 'boolean':
+            value = '' + value
+            break
+          case 'object':
+            if (part.type !== 'ref') {
+              console.error('object value found in slot without "ref" type, slot=%O, value=%O', part, value)
+            }
+            value = reftable.idForObject(value, needs)
+            break
+          default:
+            throw new Error('cant serialize: ' + JSON.stringify(value))
         }
 
         // does it need quoting?

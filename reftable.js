@@ -29,7 +29,7 @@ class ReferenceTable {
   }
 
   /*
-    sort of: item[key] = objectForId(id) 
+    sort of: item[key] = objectForId(id)
 
     BUT it handles forward references, too, so if we don't have the
     object yet, it will be set later, when we do.
@@ -46,7 +46,7 @@ class ReferenceTable {
         frs = new Set()
         this.forwardRefs.set(id, frs)
       }
-      frs.add({item, key})
+      frs.add({ item, key })
       debug('.. forward refs = %o', frs)
     }
   }
@@ -64,7 +64,7 @@ class ReferenceTable {
     }
     this.objFor.set(id, obj)
     this.idFor.set(obj, id)
-    for (let {item, key} of this.forwardRefs.get(id) || []) {
+    for (let { item, key } of this.forwardRefs.get(id) || []) {
       // in case item got instantiated, we can find it
       if (item._forwardTo) item = item._forwardTo
       debug('..doing fwd %O[%O] = %O', item, key, obj)
@@ -80,7 +80,7 @@ class ReferenceTable {
     debug('fdw = %O', this.forwardRefs)
     for (const [id, refs] of this.forwardRefs.entries() || []) {
       if (id === '(ValueUnknown)') continue
-      debug('.. %O', {id, refs})
+      debug('.. %O', { id, refs })
       console.error('Warning: unresolved forward refs to %O: %O', id, refs)
     }
     debug('reftable.idFor: %o', this.idFor)

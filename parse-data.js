@@ -2,8 +2,6 @@ const debug = require('debug')(__filename.split('/').slice(-1).join())
 const nativize = require('./nativize')
 const { escape } = require('xregexp')
 
-let seq = 10
-
 function makeRE (parsed, index, varMap) {
   const out = []
   for (const part of parsed) {
