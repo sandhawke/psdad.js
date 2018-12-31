@@ -1,0 +1,9 @@
+Given this template: Hello
+and this input text: Hello
+the resulting object as canonical JSON with 2-space indenting should be:
+[]
+
+Given this template: 
+and this input text: 
+the resulting object as canonical JSON with 2-space indenting should be:
+

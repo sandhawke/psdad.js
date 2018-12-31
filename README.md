@@ -1,11 +1,11 @@
 # psdad.js
 [![NPM version][npm-image]][npm-url]
 
-implementation of psdad data interop proposal
+JavaScript implementation of [psdad](https://sandhawke.github.io/psdad/spec.html), for node.js or browsers
 
 ## Example
 
-This is the essentially the demo.js file:
+Example (in demo.js)
 
 ```js
 const { mapper } = require('psdad')

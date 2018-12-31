@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/sandhawke/psdad.js#readme",
   "devDependencies": {
+    "canonical-json": "0.0.4",
     "tape": "^4.9.1"
   },
   "dependencies": {
