@@ -47,6 +47,7 @@ function * parse (mapper, text, reftable) {
     }
     const b = {}
     let tnum
+    let id
     for (const [key, value] of Object.entries(m.groups)) {
       if (!value) continue // to unused ones are set to undefined
       if (key.startsWith('t_')) {
@@ -61,23 +62,24 @@ function * parse (mapper, text, reftable) {
           v = JSON.parse(v)
         }
         if (slot.type === 'ref') {
-          b.tag = 'gotcha' + seq++
           reftable.setValueToId(b, slot.name, v)
           debug('after reftable.setValueToId %O', b)
         } else if (slot.type === 'id') {
-          reftable.gotId(value, b)
+          id = value
         } else {
           const native = nativize(slot.type, v)
           b[slot.name] = native
         }
       }
     }
-    // //console.log('matched template %d text %o', tnum, line)
+    // debug('matched template %d text %o', tnum, line)
     const t = mapper.templates[tnum]
-    // console.log('Got %s %o', t.code, b)
-    debug('parse() yielding %O', b)
-    reftable.log.push(b)
-    yield [t, b]
+    const newObj = t.local.input(b)
+    b._forwardTo = newObj // so forward references can resolve
+    // and how that the newObj is set, we can resolve references
+    if (id) reftable.gotId(id, newObj)
+
+    yield newObj
   }
   // console.log('DONE, at pos', mapper.mergedRE.lastIndex, text.length)
 }

@@ -52,12 +52,7 @@ class Mapper {
       const re = parseData.mergeTemplates(this.templates)
       this.mergedRE = new RegExp(re, 'imgy') // u prevents \-space ?!
     }
-    for (const [t, b] of parseData.parse(this, text, reftable)) {
-      debug('parse() yielded %O', b)
-      const newObj = t.local.input(b)
-      b._forwardTo = newObj // so forward references can resolve
-      yield newObj
-    }
+    yield * parseData.parse(this, text, reftable)
   }
 
   parse (text) {

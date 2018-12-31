@@ -70,7 +70,6 @@ class ReferenceTable {
       debug('..doing fwd %O[%O] = %O', item, key, obj)
       item[key] = obj
       debug('..did   fwd %O[%O] = %O', item, key, obj)
-      item.YO = true
       debug('..CONFIRMING, item=%O', item)
     }
     debug('..done fwd')
