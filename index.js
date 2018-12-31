@@ -5,6 +5,13 @@ const parseData = require('./parse-data')
 const { ReferenceTable } = require('./reftable')
 const { Matcher } = require('./manual-match')
 
+function isClass (x) {
+  return (x.name &&
+          x.prototype &&
+          x.prototype.constructor &&
+          x.prototype.constructor.name === x.name)
+}
+
 class Mapper {
   constructor (options = {}) {
     this.templates = []
@@ -13,34 +20,46 @@ class Mapper {
     Object.assign(this, options)
   }
 
-  add (local, text) {
-    // if it's a class, treat that as shorthand for the obvious converters
-    if (local.name &&
-        local.prototype &&
-        local.prototype.constructor &&
-        local.prototype.constructor.name === local.name) {
-      const AppClass = local
-      local = {
+  // try to give nice do-what-I-mean arguments to addPair
+  //
+  // it's completely ridiculous, I know.  tests in test-dwim.js
+  //
+  add (a, b) {
+    let local, text
+
+    if (isClass(a)) {
+      const AppClass = a
+      a = {
         class: AppClass,
         input: x => new AppClass(x),
         output: x => x instanceof AppClass
       }
     }
-    // look for the text attached to the class as a property or static method
-    const def = local && local.class && local.class.definition
-    if (text === undefined && def) {
-      if (typeof def === 'function') {
-        text = def(local.class)
-      } else {
-        text = def
-      }
-    }
-    // OR just text, if it's a [subject] template
-    if (text === undefined) {
-      text = local
-      local = undefined // this will be okay as long [subject] is found
+
+    local = a
+    text = b
+    if (typeof a === 'string') {
+      local = null // it's okay to have no .local on [subject] template. check?
+      text = a
     }
 
+    const cls = local && local.class
+    // console.error({a,b,local,text,cls})
+
+    if (text === undefined && cls) {
+      if (cls.definitions) {
+        for (const def of cls.definitions) this.addPair(local, def)
+        return
+      }
+      text = cls.definition
+    }
+
+    if (!text) throw new RangeError('no definition text supplied to add()')
+    
+    this.addPair(local, text)
+  }
+
+  addPair (local, text) {
     const parsed = [...parseTemplate.parseTemplate(text)]
     const index = this.templates.length // gets coded into regexp
     const re = parseData.makeRE(parsed, index, this.varMap)
