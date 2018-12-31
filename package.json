@@ -1,6 +1,6 @@
 {
   "name": "psdad",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "implementation of psdad data interop proposal",
   "main": "index.js",
   "scripts": {
