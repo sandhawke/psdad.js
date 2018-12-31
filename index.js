@@ -1,11 +1,14 @@
-// const debug = require('debug')(__filename.split('/').slice(-1).join())
+const debug = require('debug')(__filename.split('/').slice(-1).join())
 const intoStream = require('into-stream')
-const syntax = require('./parse-template')
+const parseTemplate = require('./parse-template')
+const parseData = require('./parse-data')
+const { ReferenceTable } = require('./reftable')
 
 class Mapper {
-  constructor () {
+  constructor (options = {}) {
     this.templates = []
     this.varMap = {}
+    this.genid = options.genid
   }
 
   add (local, text) {
@@ -31,27 +34,37 @@ class Mapper {
       }
     }
 
-    const parsed = [...syntax.parseTemplate(text)]
+    const parsed = [...parseTemplate.parseTemplate(text)]
     const index = this.templates.length // gets coded into regexp
-    const re = syntax.makeRE(parsed, index, this.varMap)
+    const re = parseData.makeRE(parsed, index, this.varMap)
     const template = { local, text, parsed, re, index }
     this.templates.push(template)
     delete this.mergedRE
     // return template
   }
 
-  * parsedItems (text) {
+  //
+  // Parsing
+  //
+  
+  * parsedItems (text, reftable) {
     if (!this.mergedRE) {
-      const re = syntax.mergeTemplates(this.templates)
+      const re = parseData.mergeTemplates(this.templates)
       this.mergedRE = new RegExp(re, 'imgy') // u prevents \-space ?!
     }
-    for (const [t, b] of syntax.parse(this, text)) {
-      yield t.local.input(b)
+    for (const [t, b] of parseData.parse(this, text, reftable)) {
+      debug('parse() yielded %O', b)
+      const newObj = t.local.input(b)
+      b._forwardTo = newObj // so forward references can resolve
+      yield newObj
     }
   }
 
   parse (text) {
-    return [...this.parsedItems(text)]
+    const reftable = new ReferenceTable({genid: this.genid})
+    const result = [...this.parsedItems(text, reftable)]
+    reftable.complete()
+    return result
   }
 
   parser () { // would return a transformStream from strings to objects
@@ -63,6 +76,10 @@ class Mapper {
     // prepend to the next chunk.  re.lastIndex makes that fairly easy.
   }
 
+  //
+  // Serializing
+  //
+  
   streamify (items) {
     return intoStream(this.stringChunks(items))
   }
@@ -72,13 +89,22 @@ class Mapper {
   }
 
   * stringChunks (items) {
+    const reftable = new ReferenceTable({genid: this.genid})
     for (const item of items) {
-      // console.log('stringify %O', item)
-      const t = this.findTemplate(item)
-      // console.log('.. using template %O', t)
-      if (!t) throw Error('cant stringify object')
-      yield * this.fill(t, item)
-      yield ('\n\n')
+      yield* this.stringChunk1 (item, reftable)
+    }
+  }
+
+  * stringChunk1 (item, reftable) {
+    // console.log('stringify %O', item)
+    const t = this.findTemplate(item)
+    // console.log('.. using template %O', t)
+    if (!t) throw Error('cant stringify object')
+    const needs = new Set()
+    yield * this.fill(t, item, needs, reftable)
+    yield ('\n\n')
+    for (const prereq of needs) {
+      yield * this.stringChunk1 (prereq, reftable)
     }
   }
 
@@ -93,26 +119,41 @@ class Mapper {
   /*
     Given a template and an object of data, yield parts of string with the
     template filled in, using the fields of that object.
+
+    - needs to be able to queue up things to be sent / first?
+    - needs to flag which properties it used, so we can use other
+      templates for some others.
   */
-  * fill (t, item) {
+  * fill (t, item, needs, reftable) {
     for (const [index, part] of t.parsed.entries()) {
       // console.log('part:', part)
       if (typeof part === 'string') {
         yield part
       } else {
-        let value = item[part.name]
+        let value
+        if (part.type === 'id') {
+          value = reftable.idForObject(item)
+        } else {
+          value = item[part.name]
+        }
         // if (value === undefined)    warn?  error?
         if (value === undefined) value = '(ValueUnknown)'
 
         switch (typeof value) {
-          case 'string':
-            break
-          case 'number':
-          case 'boolean':
-            value = '' + value
-            break
-          default:
-            throw new Error('cant serialize: ' + JSON.stringify(value))
+        case 'string':
+          break
+        case 'number':
+        case 'boolean':
+          value = '' + value
+          break
+        case 'object':
+          if (part.type !== 'ref') {
+            console.error('object value found in slot without "ref" type, slot=%O, value=%O', part, value)
+          }
+          value = reftable.idForObject(value, needs)
+          break
+        default:
+          throw new Error('cant serialize: ' + JSON.stringify(value))
         }
 
         // does it need quoting?
